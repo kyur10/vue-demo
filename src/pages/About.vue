@@ -1,9 +1,14 @@
 <template>
   <div>About Page</div>
+  <div>Counter -> {{ counter.count }}</div>
 </template>
 
 <script setup>
-  const props = defineProps(['id']);
-  console.log('about page');
-  console.log(props);
+import { useCounterStore } from '../stores/counter';
+
+const props = defineProps(['id']);
+
+const counter = useCounterStore();
+console.log('about page');
+console.log(props);
 </script>

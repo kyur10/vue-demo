@@ -10,12 +10,13 @@ import SearchUser from "./pages/SearchUser.vue";
 import ProductComponent from "./pages/ProductComponent.vue";
 import NotFound from "./pages/NotFound.vue";
 import { createRouter, createWebHashHistory } from "vue-router";
+import { createPinia } from "pinia";
 
 const routes = [
   {
     path: "/",
     component: Home,
-    props: { name: "Keyur mah" },
+    // props: { name: "Keyur mah" },
     beforeEnter: [auth1, auth2],
   },
   {
@@ -76,6 +77,16 @@ function authAccess(to) {
 }
 
 router.beforeEach(async (to, from, next) => {
+  // const hasAccess = await authAccess(to);
+  /* w/o "next" in the current function's argument */
+  // if (!hasAccess)
+  //   return {
+  //     path: "/notfound",
+  //   };
+  // return true;
+  /*  w "next" */
+  // if (!hasAccess) next({path:"/notfound"}); // or next('/notfound')
+  // else next(true);
   console.log("beforeEach");
   next(true);
 });
@@ -93,6 +104,8 @@ router.beforeResolve(async (to) => {
   }
 });
 
+const pinia = createPinia();
 const app = createApp(App);
 app.use(router);
+app.use(pinia);
 app.mount("#app");
